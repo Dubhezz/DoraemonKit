@@ -1,15 +1,13 @@
 package com.didichuxing.doraemonkit.kit.alignruler;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.didichuxing.doraemonkit.R;
 import com.didichuxing.doraemonkit.config.AlignRulerConfig;
-import com.didichuxing.doraemonkit.constant.BundleKey;
-import com.didichuxing.doraemonkit.constant.FragmentIndex;
 import com.didichuxing.doraemonkit.kit.Category;
 import com.didichuxing.doraemonkit.kit.IKit;
-import com.didichuxing.doraemonkit.ui.UniversalActivity;
+import com.didichuxing.doraemonkit.ui.base.DokitIntent;
+import com.didichuxing.doraemonkit.ui.base.DokitViewManager;
 
 /**
  * Created by wanglikun on 2018/9/19.
@@ -33,14 +31,26 @@ public class AlignRuler implements IKit {
 
     @Override
     public void onClick(Context context) {
-        Intent intent = new Intent(context, UniversalActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(BundleKey.FRAGMENT_INDEX, FragmentIndex.FRAGMENT_ALIGN_RULER_SETTING);
-        context.startActivity(intent);
+        DokitViewManager.getInstance().detachToolPanel();
+
+        DokitIntent pageIntent = new DokitIntent(AlignRulerMarkerDokitView.class);
+        pageIntent.mode = DokitIntent.MODE_SINGLE_INSTANCE;
+        DokitViewManager.getInstance().attach(pageIntent);
+
+        pageIntent = new DokitIntent(AlignRulerLineDokitView.class);
+        pageIntent.mode = DokitIntent.MODE_SINGLE_INSTANCE;
+        DokitViewManager.getInstance().attach(pageIntent);
+
+        pageIntent = new DokitIntent(AlignRulerInfoDokitView.class);
+        pageIntent.mode = DokitIntent.MODE_SINGLE_INSTANCE;
+        DokitViewManager.getInstance().attach(pageIntent);
+
+
+        AlignRulerConfig.setAlignRulerOpen(context, true);
     }
 
     @Override
-    public  void onAppInit(Context context) {
+    public void onAppInit(Context context) {
         AlignRulerConfig.setAlignRulerOpen(context, false);
     }
 }

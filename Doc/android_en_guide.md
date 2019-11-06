@@ -5,8 +5,8 @@
 ```
 dependencies {
 	...
-    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:1.0.5'
-    releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:1.0.5'
+    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:2.0.0'
+    releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:2.0.0'
     ...
 }
 ```
@@ -28,7 +28,7 @@ public void onCreate() {
     // for web container debug, optional
     DoraemonKit.setWebDoorCallback(new WebDoorManager.WebDoorCallback() {
     @Override
-    public void overrideUrlLoading(String s) {
+    public void overrideUrlLoading(Context context, String s) {
         // use your web container open the link
     }
     ...
@@ -47,7 +47,7 @@ Add a dependency in `build.gradle` in root of host project as following.
 buildscript {
     dependencies {
         ...
-        classpath 'com.didichuxing.doraemonkit:compiler:1.0.0'
+        classpath 'com.github.franticn:gradle_plugin_android_aspectjx:2.0.6'
         ...
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -59,7 +59,12 @@ Apply plugin in application module of `build.gradle`
 
 ```
 ...
-apply plugin: 'com.doraemon.compiler.plugin'
+apply plugin: 'android-aspectjx'
+dependencies {
+	...
+    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit-aop:2.0.0'
+    ...
+}
 ```
 
 
